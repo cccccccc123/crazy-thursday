@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安徽三日游超详细攻略 - 小红书旅游博主</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            color: white;
+        }
+        
+        /* 小红书样式仅作为分享伪装 */
+        .hidden-share-title {
+            display: none;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid #fff;
+            border-radius: 25px;
+            animation: borderPulse 3s infinite;
+        }
+        
+        h1 {
+            color: #ffde00;
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+        
+        .subtitle {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            line-height: 1.5;
+            margin: 0 auto 40px;
+            max-width: 600px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .v50-container {
+            position: relative;
+            display: inline-block;
+            margin: 30px auto;
+        }
+        
+        .v50 {
+            font-size: 5rem;
+            color: #ffde00;
+            font-weight: bold;
+            display: block;
+            position: relative;
+            transform: rotate(-5deg);
+            text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+        
+        .button-container {
+            margin: 50px 0;
+        }
+        
+        .v-button {
+            background: linear-gradient(to bottom, #ffde00, #ffba08);
+            color: #cc0000;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 3;
+        }
+        
+        .v-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .v-button:active {
+            transform: translateY(2px);
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .qr-modal {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-active .qr-modal {
+            transform: scale(1);
+        }
+        
+        .qr-code {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+        
+        .tip {
+            color: #333;
+            font-size: 1.2rem;
+            margin: 20px 0 10px;
+            text-align: center;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #eee;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+        
+        .close-button:hover {
+            background: #ddd;
+        }
+        
+        .falling-element {
+            position: absolute;
+            font-size: 2rem;
+            top: -30px;
+            animation: fall linear 7s infinite;
+            color: #ffde00;
+            z-index: -1;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes borderPulse {
+            0% { border-color: rgba(255, 255, 255, 0.5); }
+            50% { border-color: rgba(255, 255, 255, 0.9); }
+            100% { border-color: rgba(255, 255, 255, 0.5); }
+        }
+        
+        /* 装饰元素 */
+        .element-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .kfc-logo {
+            position: absolute;
+            font-size: 5rem;
+            animation: float 15s infinite linear;
+            opacity: 0.3;
+            color: #ffde00;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(100vw, 50vh) rotate(180deg);
+            }
+            100% {
+                transform: translate(0, 100vh) rotate(360deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .subtitle { font-size: 1.6rem; }
+            .v50 { font-size: 4rem; }
+            .v-button { padding: 16px 40px; font-size: 1.5rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 2.2rem; }
+            .subtitle { font-size: 1.3rem; }
+            .v50 { font-size: 3rem; }
+            .v-button { padding: 14px 30px; font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 小红书伪装标题 (仅在分享链接中显示) -->
+    <div class="hidden-share-title">
+        <h1>安徽三日游超详细攻略 | 黄山+宏村+西递精华路线</h1>
+        <p>旅行博主小安分享：详细行程+美食推荐+拍照打卡点</p>
+    </div>
+    
+    <!-- 装饰元素容器 -->
+    <div class="element-container">
+        <div class="kfc-logo">🍗</div>
+        <div class="kfc-logo" style="animation-delay: -5s; top:20%;">🍟</div>
+        <div class="kfc-logo" style="animation-delay: -10s; top:40%;">🥤</div>
+        <div class="kfc-logo" style="animation-delay: -15s; top:60%;">🍔</div>
+        <div class="kfc-logo" style="animation-delay: -20s; top:80%;">🌶️</div>
+    </div>
+    
+    <!-- 主要内容容器 -->
+    <div class="container">
+        <h1>疯狂星期四</h1>
+        <div class="subtitle">
+            今天是你的幸运日！
+        </div>
+        
+        <div class="v50-container">
+            <div class="v50">V</div>
+            <div class="v50">50</div>
+        </div>
+        
+        <div class="subtitle">
+            请助力肯德基疯狂星期四
+        </div>
+        
+        <div class="button-container">
+            <button class="v-button">这就去V</button>
+        </div>
+        
+        <div class="subtitle" style="font-size:1.5rem; margin-top:30px;">
+            (分享链接已伪装为旅游攻略，请放心转发)
+        </div>
+    </div>
+    
+    <!-- 收款码弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="qr-modal">
+            <div class="close-button" id="closeButton">✕</div>
+            <h3 style="color:#cc0000;margin-bottom:20px;">疯狂星期四赞助通道</h3>
+            <img src="https://cdn.staticaly.com/gh/qrcdn/qrcode/main/img/bg.png" alt="收款码" class="qr-code">
+            <p class="tip">请使用微信/支付宝扫码支持</p>
+            <p style="color:#666;font-size:0.9rem;">你的支持将让我度过一个美妙的周四</p>
+        </div>
+    </div>
+    
+    <script>
+        // DOM加载后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取元素
+            const vButton = document.querySelector('.v-button');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const closeButton = document.getElementById('closeButton');
+            
+            // 点击按钮显示收款码
+            vButton.addEventListener('click', function() {
+                modalOverlay.classList.add('modal-active');
+                vButton.textContent = '感恩V我50';
+                vButton.style.background = 'linear-gradient(to bottom, #e8c000, #d9a100)';
+            });
+            
+            // 关闭弹窗
+            closeButton.addEventListener('click', function() {
+                modalOverlay.classList.remove('modal-active');
+            });
+            
+            // 点击背景关闭弹窗
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('modal-active');
+                }
+            });
+            
+            // 修改标题为小红书风格（仅用于分享显示）
+            document.title = "安徽三日游超详细攻略 | 黄山+宏村+西递精华路线 - 小红书";
+            
+            // 为装饰元素添加更多随机性
+            const elements = document.querySelectorAll('.kfc-logo');
+            elements.forEach(el => {
+                const size = Math.random() * 4 + 2;
+                el.style.fontSize = `${size}rem`;
+                el.style.opacity = Math.random() * 0.4 + 0.1;
+            });
+        });
+    </script>
+</body>
+</html>
